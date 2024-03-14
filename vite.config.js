@@ -2,16 +2,17 @@ import { defineConfig } from 'vite';
 import { readdirSync } from 'fs';
 import zipPack from 'vite-plugin-zip-pack';
 
-const getDirectories = (source) =>
+const modulesDir = `./public/assets`;
+const getModules = (source) =>
   readdirSync(source, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 
-const zipPackModules = getDirectories('./src/downloads').map((module) => {
+const zipPackModules = getModules(modulesDir).map((module) => {
   return zipPack({
-    inDir: `./src/downloads/${module}`,
-    outDir: `./dist/${module}`,
-    outFileName: `${module}`,
+    inDir: `./public/assets/${module}`,
+    outDir: `./dist/downloads/${module}`,
+    outFileName: `${module}.zip`,
   });
 });
 
